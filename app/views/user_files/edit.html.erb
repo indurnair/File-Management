@@ -1,0 +1,9 @@
+<h1>Edit File</h1>
+<% form_for  @user_file, :html => { :multipart => true } do |form| %>
+  <tr><td>Title: </td><td><%= form.text_field :title %></td></tr>
+  <tr><td>Description: </td><td><%= form.text_field :description %></td></tr>
+  <tr><td>Upload File: </td><td><%= form.file_field :attachment %></td></tr>
+  <%= form.hidden_field :user_id, :value=>current_user.id %>
+  <tr><td colspan="2"><%= form.submit 'Upload' %></td></tr>
+<% end %>
+

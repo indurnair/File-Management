@@ -1,0 +1,11 @@
+<h1>List of Files</h1>
+<table>
+<th>File Name</th><th>Uploaded by </th>
+<% for attachment in @user_files %>
+<tr>
+<td><%= attachment.attachment.url %></td>
+<td><%= attachment.user.name %></td>
+</tr>
+<% end %>
+</table>
+

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FileManagement</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+
+<div id="menu" style="width:80%" align="center">
+<% if current_user %>
+<%= link_to 'Logout',destroy_user_session_path %>|
+<%= link_to 'Edit Profile',edit_registration_path(current_user) %>|
+<%= link_to 'Upload',new_user_file_path %>
+<% else %>
+<%= link_to 'Login',new_user_session_path %>|
+
+<%= link_to "Sign up",new_user_registration_path %>
+
+<% end %>
+</div>
+<div  id="content" style="width:80%" align="center">
+<div style="float:right"><% if current_user %>Logged in as <%= current_user.login %> <% end %></div>
+
+<% flash.each do |key,value| %>
+             <div  id="flash" class="flash_<%= key %>" >
+                <div class="message"><%= value %></div>
+                <br><br>
+             </div><!-- end  flash   -->
+         <% end -%>
+
+<%= yield %>
+</div>
+
+</body>
+</html>
+

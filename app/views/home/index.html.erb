@@ -1,0 +1,3 @@
+<h1>Home</h1>
+The User model is much like any other ActiveRecord model but it has a call to a devise method, which is here the authentication magic happens. The devise method takes as arguments a list of the modules we want to support in our application and you should recognize :rememberable and :recoverable from when we mentioned them earlier. We can easily add or remove modules from this list to customize devise’s authentication to our application’s needs. To that end we’ve removed :confirmable as we don’t want users to have to confirm that they’ve signed up via email.
+
