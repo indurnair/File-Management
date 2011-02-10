@@ -17,6 +17,14 @@ class UserFilesController < ApplicationController
     end
   end
 
+  def current_user_files
+    @user_files = UserFile.find(:all,:conditions=>['user_id = ?',current_user.id])
+  end
+
+  def published_files
+    @user_files = UserFile.find(:all,:conditions=>['published = ?',true])
+  end
+
   def index
    @user_files = UserFile.all
   end

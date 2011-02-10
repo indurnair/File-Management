@@ -1,4 +1,6 @@
 FileManagement::Application.routes.draw do
+  get "users/index"
+
   get "home/index"
 
   resources :states
@@ -9,7 +11,13 @@ FileManagement::Application.routes.draw do
 
   root :to=>'home#index'
 
-  resources :user_files
+  resources :user_files  do
+     collection do
+      get :current_user_files
+      get :published_files
+     end
+  end
+  resources :users
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

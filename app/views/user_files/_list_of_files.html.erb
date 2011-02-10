@@ -1,0 +1,18 @@
+<% unless @user_files.blank? %>
+<h1>List of Files</h1>
+<table cellpadding="0" cellspacing="0" width="80%">
+<tr class="table_heading"><td>Title</td><td>Description</td><td>Created Date</td><td></td></tr>
+
+<% for attachment in @user_files %>
+<tr class="<%= cycle('even', 'odd')%>">
+<td><%= attachment.title %></td>
+<td><%= attachment.description %></td>
+<td><%= attachment.created_at.strftime("%m/%d/%y") %></td>
+<td><%= link_to 'Create New Version' %></td>
+</tr>
+<% end %>
+</table>
+<% else %>
+<h3>Records not found</h3>
+<% end %>
+

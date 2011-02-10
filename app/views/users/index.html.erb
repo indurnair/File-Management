@@ -1,0 +1,16 @@
+<h1>User List</h1>
+<table cellpadding="0" cellspacing="0" width="80%">
+<% for user in @users %>
+<tr class="table_heading"><td>First Name</td><td>Last Name</td><td>Login</td><td>Email</td><td></td><td></td></tr>
+<tr class="<%= cycle('even', 'odd')%>">
+  <td><%= user.first_name %></td>
+  <td><%= user.last_name %></td>
+  <td><%= user.login %></td>
+  <td><%= user.email %></td>
+  <td><% if user.active %>Active<% else %>Banned<%end %></td>
+  <td><%= link_to 'Edit',edit_user_path(user.id)%>
+</tr>
+<% end %>
+<tr>
+</table>
+

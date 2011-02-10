@@ -1,0 +1,30 @@
+<%= form_for @user  do |f| %>
+ <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+ <table>
+ <tr><td><%= f.label 'First Name' %>:</td><td><%= f.text_field :first_name %></td></tr>
+ <tr><td><%= f.label 'Last Name' %>:</td><td><%= f.text_field :last_name %></td></tr>
+ <tr><td><%= f.label 'State' %>:</td><td><%= f.select :state_id,State.find(:all).map {|state| [state.name,state.id]}, {:include_blank => 'Select ...'}
+ %></td></tr>
+ <tr><td><%= f.label 'Country' %>:</td><td><%= f.select :country_id,Country.find(:all).map {|country| [country.name,country.id]}, {:include_blank => 'Select ...'}
+ %></td></tr>
+ <tr><td>Activate/Ban? </td><td><%= check_box :user, :active %></td></tr>
+ <tr><td><%= f.label :roles %></td>
+ <td>   <% for role in User::ROLES %>
+      <%= check_box_tag "user[roles][]", role, @user.roles.include?(role) %>
+      <%=h role.humanize %>
+    <% end %>
+    <%= hidden_field_tag "user[roles][]", "" %></td></tr>
+</table>
+  <%= f.submit "Update" %>
+<% end %>
+

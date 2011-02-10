@@ -9,7 +9,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :zip
       t.references :state
       t.references :country
-      t.integer :role_mask
+      t.integer :roles_mask
       t.database_authenticatable :null => false
       t.confirmable
       t.recoverable

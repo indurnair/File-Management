@@ -12,20 +12,6 @@
 
 ActiveRecord::Schema.define(:version => 20110209090621) do
 
-  create_table "attachments", :force => true do |t|
-    t.string   "attachment_file_name"
-    t.string   "attachment_content_type"
-    t.integer  "attachment_file_size"
-    t.integer  "user_id"
-    t.integer  "parent_id"
-    t.string   "ancestors"
-    t.boolean  "published",               :default => false
-    t.string   "title"
-    t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "countries", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -54,17 +40,18 @@ ActiveRecord::Schema.define(:version => 20110209090621) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "name"
-    t.string   "login",                                               :null => false
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "login",                                                 :null => false
     t.string   "address"
-    t.string   "street"
+    t.boolean  "active",                              :default => true
     t.string   "zip"
     t.integer  "state_id"
     t.integer  "country_id"
-    t.integer  "role_mask"
-    t.string   "email",                               :default => "", :null => false
-    t.string   "encrypted_password",   :limit => 128, :default => "", :null => false
-    t.string   "password_salt",                       :default => "", :null => false
+    t.integer  "roles_mask"
+    t.string   "email",                               :default => "",   :null => false
+    t.string   "encrypted_password",   :limit => 128, :default => "",   :null => false
+    t.string   "password_salt",                       :default => "",   :null => false
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"

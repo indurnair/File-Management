@@ -12,7 +12,9 @@
 <% if current_user %>
 <%= link_to 'Logout',destroy_user_session_path %>|
 <%= link_to 'Edit Profile',edit_registration_path(current_user) %>|
-<%= link_to 'Upload',new_user_file_path %>
+<%= link_to 'Upload',new_user_file_path %>|
+<%= link_to 'Your Files',:controller=>'/user_files',:action=>'current_user_files' %>|
+<%= link_to 'Published Files',:controller=>'/user_files',:action=>'published_files' %>
 <% else %>
 <%= link_to 'Login',new_user_session_path %>|
 
