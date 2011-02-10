@@ -4,7 +4,6 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :first_name
       t.string :last_name
       t.string :login,:null=>false
-      t.string :address
       t.boolean :active,:default=>true
       t.string :zip
       t.references :state
@@ -24,6 +23,9 @@ class DeviseCreateUsers < ActiveRecord::Migration
     add_index :users, :confirmation_token,   :unique => true
     add_index :users, :reset_password_token, :unique => true
     # add_index :users, :unlock_token,         :unique => true
+    @user = User.create!(:first_name=>'Admin',:last_name=>'Admin',:login=>'admin',:email=>'admin@test.com',:password=>'12345678',:password_confirmation=>'12345678',:zip=>'123456',:roles=>[User::ROLES[0]])
+  @user.update_attribute(:roles,([User::ROLES[0]]))
+
   end
 
   def self.down

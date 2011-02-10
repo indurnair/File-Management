@@ -22,7 +22,7 @@
  %></td></tr>
  <tr><td><%= f.label 'Country' %>:</td><td><%= f.select :country_id,Country.find(:all).map {|country| [country.name,country.id]}, {:include_blank => 'Select ...'}
  %></td></tr>
-
+<tr><td><%= f.label 'Zip' %>:</td><td><%= f.text_field :zip %></td></tr>
  <tr><td colspan="2"><%= f.submit "Sign up" %></td></tr>
 <% end %>
 </table>

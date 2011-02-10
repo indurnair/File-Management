@@ -43,7 +43,6 @@ ActiveRecord::Schema.define(:version => 20110209090621) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "login",                                                 :null => false
-    t.string   "address"
     t.boolean  "active",                              :default => true
     t.string   "zip"
     t.integer  "state_id"
