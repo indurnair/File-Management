@@ -15,6 +15,8 @@ FileManagement::Application.routes.draw do
      collection do
       get :current_user_files
       get :published_files
+      get :download
+      post :publish_file
      end
   end
   resources :users

@@ -9,10 +9,17 @@
 <body>
 
 <div id="menu" style="width:80%" align="center">
-<% if current_user %>
+<% if current_user and current_user.role? :user %>
 <%= link_to 'Logout',destroy_user_session_path %>|
 <%= link_to 'Edit Profile',edit_registration_path(current_user) %>|
 <%= link_to 'Upload',new_user_file_path %>|
+<%= link_to 'Your Files',:controller=>'/user_files',:action=>'current_user_files' %>|
+<%= link_to 'Published Files',:controller=>'/user_files',:action=>'published_files' %>
+<% elsif current_user and current_user.role? :admin %>
+<%= link_to 'Logout',destroy_user_session_path %>|
+<%= link_to 'Edit Profile',edit_registration_path(current_user) %>|
+<%= link_to 'Upload',new_user_file_path %>|
+<%= link_to 'All Files',user_files_path %>|
 <%= link_to 'Your Files',:controller=>'/user_files',:action=>'current_user_files' %>|
 <%= link_to 'Published Files',:controller=>'/user_files',:action=>'published_files' %>
 <% else %>

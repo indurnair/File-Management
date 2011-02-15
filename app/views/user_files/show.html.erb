@@ -1,3 +1,14 @@
-<h1></h1>
-<%= 'Uploaded File: '%><%= @user_file.attachment.url %>
+
+<%#= 'Uploaded File: '%><%#= @user_file.attachment.url %>
+<table>
+<tr><td>Title : <%= @user_file.title %></td></tr>
+<tr><td>Description : <%= @user_file.description %></td></tr>
+<tr><td><% if @user_file.published? %> Published <% else %> Unpublished <% end %></td></tr>
+<tr><td><%= link_to 'Download',:controller=>'user_files',:action=>'download',:id=>@user_file.id %></td>
+<% if current_user.id == @user_file.user_id %>
+<td><%= form_tag 'publish_file' do  %>
+<%= hidden_field_tag 'file_id',@user_file.id %>
+<%= submit_tag 'Publish' %>
+<% end end %>
+</table>
 

@@ -50,5 +50,17 @@ class UserFilesController < ApplicationController
       end
     end
   end
+
+
+  def download
+    @user_file = UserFile.find(params[:id])
+    send_file Rails.root.to_s + '/public'.to_s + @user_file.attachment.url.to_s
+  end
+
+  def publish_file
+    @user_file = UserFile.find(params[:file_id])
+    @user_file.update_attribute(:published,true)
+    redirect_to user_file_path(@user_file.id)
+  end
 end
 

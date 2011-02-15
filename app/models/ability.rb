@@ -3,16 +3,16 @@ class Ability
 
   def initialize(user)
     user ||= User.new
-      user ||= User.new
       if user.role? :admin
        can :manage, :all
 
      end
       if user.role? :user
        can :create, UserFile
-      can [:edit,:update], UserFile
+      can [:edit,:update,:published_files,:current_user_files,:download,:publish_file], UserFile
 
-      can :read, :all
+      can :read, User
+      can :show, UserFile
      end
     # Define abilities for the passed in user here. For example:
     #
