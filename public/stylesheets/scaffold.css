@@ -73,21 +73,21 @@ background-color: #c5dcfd;
 border-width: .1em;
 border-style: solid;
 border-color: #fff;
-background-image: url('/images/menu_bg.jpg');
+background-image: url('/images/menu_bg.gif');
 background-repeat:repeat-x;
 }
 
  #menu  a{
     color: #fff;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 12px;
+    /*font-weight: bold;*/
 
  }
 
 #menu  a:hover {
-    color: 	#000000;
-    font-size: 14px;
-
+    background-image: url('/images/menu_bg_hover.png');
+    background-repeat:no-repeat;
+    background-position:center;
  }
 .even{
   background-color: #F5FFFA;

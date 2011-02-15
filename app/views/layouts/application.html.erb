@@ -10,20 +10,20 @@
 
 <div id="menu" style="width:80%" align="center">
 <% if current_user and current_user.role? :user %>
-<%= link_to 'Logout',destroy_user_session_path %>|
-<%= link_to 'Edit Profile',edit_registration_path(current_user) %>|
-<%= link_to 'Upload',new_user_file_path %>|
-<%= link_to 'Your Files',:controller=>'/user_files',:action=>'current_user_files' %>|
+<%= link_to 'Logout',destroy_user_session_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
+<%= link_to 'Edit Profile',edit_registration_path(current_user) %>&nbsp;&nbsp;|&nbsp;&nbsp;
+<%= link_to 'Upload',new_user_file_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
+<%= link_to 'Your Files',:controller=>'/user_files',:action=>'current_user_files' %>&nbsp;&nbsp;|&nbsp;&nbsp;
 <%= link_to 'Published Files',:controller=>'/user_files',:action=>'published_files' %>
 <% elsif current_user and current_user.role? :admin %>
-<%= link_to 'Logout',destroy_user_session_path %>|
+<%= link_to 'Logout',destroy_user_session_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
 <%= link_to 'Edit Profile',edit_registration_path(current_user) %>|
-<%= link_to 'Upload',new_user_file_path %>|
-<%= link_to 'All Files',user_files_path %>|
-<%= link_to 'Your Files',:controller=>'/user_files',:action=>'current_user_files' %>|
+<%= link_to 'Upload',new_user_file_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
+<%= link_to 'All Files',user_files_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
+<%= link_to 'Your Files',:controller=>'/user_files',:action=>'current_user_files' %>&nbsp;&nbsp;|&nbsp;&nbsp;
 <%= link_to 'Published Files',:controller=>'/user_files',:action=>'published_files' %>
 <% else %>
-<%= link_to 'Login',new_user_session_path %>|
+<%= link_to 'Login',new_user_session_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
 
 <%= link_to "Sign up",new_user_registration_path %>
 
