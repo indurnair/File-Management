@@ -6,26 +6,6 @@
  */
 
 (function($) {
-	// Make sure that every Ajax request sends the CSRF token
-	function CSRFProtection(fn) {
-		var token = $('meta[name="csrf-token"]').attr('content');
-		if (token) fn(function(xhr) { xhr.setRequestHeader('X-CSRF-Token', token) });
-	}
-	if ($().jquery == '1.5') { // gruesome hack
-		var factory = $.ajaxSettings.xhr;
-		$.ajaxSettings.xhr = function() {
-			var xhr = factory();
-			CSRFProtection(function(setHeader) {
-				var open = xhr.open;
-				xhr.open = function() { open.apply(this, arguments); setHeader(this) };
-			});
-			return xhr;
-		};
-	}
-	else $(document).ajaxSend(function(e, xhr) {
-		CSRFProtection(function(setHeader) { setHeader(xhr) });
-	});
-
 	// Triggers an event on an element and returns the event result
 	function fire(obj, name, data) {
 		var event = new $.Event(name);
@@ -38,6 +18,7 @@
 		var method, url, data,
 			dataType = element.attr('data-type') || ($.ajaxSettings && $.ajaxSettings.dataType);
 
+	if (fire(element, 'ajax:before')) {
 		if (element.is('form')) {
 			method = element.attr('method');
 			url = element.attr('action');
@@ -53,26 +34,26 @@
 			url = element.attr('href');
 			data = null;
 		}
-
-		$.ajax({
-			url: url, type: method || 'GET', data: data, dataType: dataType,
-			// stopping the "ajax:beforeSend" event will cancel the ajax request
-			beforeSend: function(xhr, settings) {
-				if (settings.dataType === undefined) {
-					xhr.setRequestHeader('accept', '*/*;q=0.5, ' + settings.accepts.script);
+			$.ajax({
+				url: url, type: method || 'GET', data: data, dataType: dataType,
+				// stopping the "ajax:beforeSend" event will cancel the ajax request
+				beforeSend: function(xhr, settings) {
+					if (settings.dataType === undefined) {
+						xhr.setRequestHeader('accept', '*/*;q=0.5, ' + settings.accepts.script);
+					}
+					return fire(element, 'ajax:beforeSend', [xhr, settings]);
+				},
+				success: function(data, status, xhr) {
+					element.trigger('ajax:success', [data, status, xhr]);
+				},
+				complete: function(xhr, status) {
+					element.trigger('ajax:complete', [xhr, status]);
+				},
+				error: function(xhr, status, error) {
+					element.trigger('ajax:error', [xhr, status, error]);
 				}
-				return fire(element, 'ajax:beforeSend', [xhr, settings]);
-			},
-			success: function(data, status, xhr) {
-				element.trigger('ajax:success', [data, status, xhr]);
-			},
-			complete: function(xhr, status) {
-				element.trigger('ajax:complete', [xhr, status]);
-			},
-			error: function(xhr, status, error) {
-				element.trigger('ajax:error', [xhr, status, error]);
-			}
-		});
+			});
+		}
 	}
 
 	// Handles "data-method" on links such as:
@@ -114,12 +95,22 @@
 		return !message || (fire(element, 'confirm') && confirm(message));
 	}
 
-	function requiredValuesMissing(form) {
-		var missing = false;
-		form.find('input[name][required]').each(function() {
-			if (!$(this).val()) missing = true;
+	function blankInputs(form, specifiedSelector) {
+		var blankExists = false,
+				selector = specifiedSelector || 'input';
+		form.find(selector).each(function() {
+			if (!$(this).val()) blankExists = true;
 		});
-		return missing;
+		return blankExists;
+	}
+	
+	function nonBlankInputs(form, specifiedSelector) {
+		var nonBlankExists = false,
+				selector = specifiedSelector || 'input';
+		form.find(selector).each(function() {
+			if ($(this).val()) nonBlankExists = true;
+		});
+		return nonBlankExists;
 	}
 
 	$('a[data-confirm], a[data-method], a[data-remote]').live('click.rails', function(e) {
@@ -139,15 +130,20 @@
 		var form = $(this), remote = form.attr('data-remote') != undefined;
 		if (!allowAction(form)) return false;
 
-		// skip other logic when required values are missing
-		if (requiredValuesMissing(form)) return !remote;
+		// skip other logic when required values are missing or file upload is present
+		if (blankInputs(form, 'input[name][required]')) {
+			form.trigger('ajax:aborted:required');
+			return !remote;
+		}
+		if (nonBlankInputs(form, 'input:file')) {
+			return fire(form, 'ajax:aborted:file');
+		}
 
 		if (remote) {
 			handleRemote(form);
 			return false;
 		} else {
-			// slight timeout so that the submit button gets properly serialized
-			setTimeout(function(){ disableFormElements(form) }, 13);
+			disableFormElements(form);
 		}
 	});
 
