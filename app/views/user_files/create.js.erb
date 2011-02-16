@@ -1,12 +1,5 @@
 <%= remotipart_response do %>
-
-title = $("#user_file_title").val();
-description= $("#user_file_description").val();
-
-$("#userfile_form").html("<%= escape_javascript(render(@user_file))%>");
-$("#userfile_form").before('<div id="flash_notice">File Uploaded, Pls upadate the details</div>');
-
-$("#user_file_title").val(title)
-$("#user_file_description").val(description)
+$("#flash_notice").html('User File details updated');
+$("#userfile_added").append("<%= escape_javascript(render(@user_file))%>");
 <% end %>
 
