@@ -2,17 +2,23 @@ class UserFilesController < ApplicationController
   load_and_authorize_resource
   def new
     @user_file = UserFile.new
+    @user_files = UserFile.find(:all,:conditions=>['user_id = ?',current_user.id])
   end
 
   def create
     @user_file = UserFile.create( params[:user_file] )
+    @user_file.user = current_user
     respond_to do |format|
       if @user_file.save
         format.html { redirect_to(@user_file, :notice => 'File uploaded was successfully.') }
         format.xml  { render :xml => @user_file, :status => :created, :location => @attachment }
+         @user_files = UserFile.find(:all,:conditions=>['user_id = ?',current_user.id])
+         format.js
       else
-        format.html { render :action => "@user_file" }
+        format.html { render :action => "new" }
         format.xml  { render :xml => @user_file.errors, :status => :unprocessable_entity }
+        @user_files = UserFile.find(:all,:conditions=>['user_id = ?',current_user.id])
+        format.js
       end
     end
   end
