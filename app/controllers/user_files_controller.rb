@@ -2,7 +2,7 @@ class UserFilesController < ApplicationController
   load_and_authorize_resource
   def new
     @user_file = UserFile.new
-    @user_files = UserFile.find(:all,:conditions=>['user_id = ?',current_user.id])
+
   end
 
   def create
@@ -12,12 +12,10 @@ class UserFilesController < ApplicationController
       if @user_file.save
         format.html { redirect_to(@user_file, :notice => 'File uploaded was successfully.') }
         format.xml  { render :xml => @user_file, :status => :created, :location => @attachment }
-         @user_files = UserFile.find(:all,:conditions=>['user_id = ?',current_user.id])
          format.js
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @user_file.errors, :status => :unprocessable_entity }
-        @user_files = UserFile.find(:all,:conditions=>['user_id = ?',current_user.id])
         format.js
       end
     end
@@ -47,12 +45,14 @@ class UserFilesController < ApplicationController
     @user_file = UserFile.find(params[:id])
 
     respond_to do |format|
-      if @user_file.update_attributes(params[:user_fil])
+      if @user_file.update_attributes(params[:user_file])
         format.html { redirect_to(@user_file, :notice => 'File was successfully updated.') }
         format.xml  { head :ok }
+        format.js
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @user_file.errors, :status => :unprocessable_entity }
+        format.js
       end
     end
   end

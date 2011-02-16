@@ -1,2 +1,26 @@
-<p><%= user_file.title %>:<%= user_file.description %>:<%= link_to "Click me" , user_file.attachment.url %> </p>
+<% form_for  user_file, :remote=> true do |form| %>
+<div class="field">
+<table class="tbl_field">
+   <tr>
+    <td>File</td>
+    <td>
+      <%= link_to 'Download',:controller=>'user_files',:action=>'download',:id=>user_file.id %></td>
+    </td>
+  </tr>
+  <tr>
+    <td>Title</td><td><%= form.text_field :title %></td>
+  </tr>
+  <tr>
+    <td>Description</td><td><%= form.text_field :description %></td>
+  </tr>
+
+</table>
+
+
+</div>
+<div class="actions"  >
+<%= form.submit 'Update' %>
+</div>
+
+<% end %>
 

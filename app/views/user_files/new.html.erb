@@ -1,19 +1,58 @@
-<div id="user_files">
-<h1>Uploaded</h1>
-<%= render @user_files %>
-</div>
+
+<style type="text/css">
+#pbar{
+  width:206px;
+  height:11px;
+  background-image: url('/images/pbar.gif');
+}
+</style>
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+// <![CDATA[
+$(document).ready(function() {
+  $('#user_file_attachment').change(function(){
+      $('#new_user_file').trigger('submit');
+      $('#file_field').toggle();
+      $('#pbar').toggle();
+  });
+});
+
+
+// ]]>
+</script>
+
+
+
+
 
 
 <h1>New File Upload</h1>
+
+<div id="userfile_form">
 <%= form_for @user_file, :remote => true, :html => { :multipart => true }  do |form| %>
 <div class="field">
-<p>Title:<%= form.text_field :title %></p>
-<p>Description:<%= form.text_field :description %></p>
 
-<p>Upload File:<%= form.file_field :attachment %></p>
+<table class="tbl_field">
+   <tr>
+    <td>File</td>
+    <td>
+      <div id="file_field"><%= form.file_field :attachment %></div>
+      <div id="pbar" style="display:none;" ></div>
+      <div id="user_file"></div>
+    </td>
+  </tr>
+  <tr>
+    <td>Title</td><td><%= form.text_field :title %></td>
+  </tr>
+  <tr>
+    <td>Description</td><td><%= form.text_field :description %></td>
+  </tr>
+
+</table>
+
 </div>
-<div class="actions">
-<%= form.submit 'Upload' %>
-</div>
+
 <% end %>
+
+</div>
 
