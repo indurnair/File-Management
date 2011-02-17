@@ -1,7 +1,7 @@
 class UserFilesController < ApplicationController
   load_and_authorize_resource
   def new
-    @user_file = UserFile.new
+    #@user_file = UserFile.new
 
   end
 
@@ -10,12 +10,15 @@ class UserFilesController < ApplicationController
     @user_file.user = current_user
     respond_to do |format|
       if @user_file.save
-        format.html { redirect_to(@user_file, :notice => 'File uploaded was successfully.') }
-        format.xml  { render :xml => @user_file, :status => :created, :location => @attachment }
+        #format.html { redirect_to(@user_file, :notice => 'File uploaded was successfully.') }
+        #format.xml  { render :xml => @user_file, :status => :created, :location => @attachment }
+         flash[:notice] = 'File uploaded successfully'
          format.js
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @user_file.errors, :status => :unprocessable_entity }
+        #format.html { render :action => "new" }
+        #format.xml  { render :xml => @user_file.errors, :status => :unprocessable_entity }
+        @user_file = nil
+        flash[:notice] = 'Pls specify the file to upload'
         format.js
       end
     end
@@ -46,12 +49,14 @@ class UserFilesController < ApplicationController
 
     respond_to do |format|
       if @user_file.update_attributes(params[:user_file])
-        format.html { redirect_to(@user_file, :notice => 'File was successfully updated.') }
-        format.xml  { head :ok }
+        #format.html { redirect_to(@user_file, :notice => 'File was successfully updated.') }
+        #format.xml  { head :ok }
+        flash[:notice] = 'File updated successfully'
         format.js
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @user_file.errors, :status => :unprocessable_entity }
+        #format.html { render :action => "edit" }
+        #format.xml  { render :xml => @user_file.errors, :status => :unprocessable_entity }
+        flash[:notice] = 'File updation failed.'
         format.js
       end
     end
@@ -68,5 +73,18 @@ class UserFilesController < ApplicationController
     @user_file.update_attribute(:published,true)
     redirect_to user_file_path(@user_file.id)
   end
+
+  def new_version
+  @old_user_file = UserFile.find(params[:id])
+  @user_file = UserFile.new(@old_user_file.attributes.merge(:user_id => current_user.id,:published => false, :parent_id=>@old_user_file.id, :ancestors => @old_user_file.ancestors ? "#{@old_user_file.ancestors},#{@old_user_file.id.to_s}" : "#{@old_user_file.id.to_s}", :version_number => @old_user_file.version_number ? "#{@old_user_file.version_number}.1" : "1"))
+    @user_file.attachment = @old_user_file.attachment
+    if @user_file.save
+      flash[:notice] = 'Successfully created new version.'
+      redirect_to edit_user_file_path(@user_file)
+    end
+
+  end
+
+
 end
 

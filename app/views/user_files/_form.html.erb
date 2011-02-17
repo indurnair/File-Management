@@ -1,5 +1,5 @@
 <div id="userfile_form">
-<%= form_for @user_file, :remote => true, :html => { :multipart => true }  do |form| %>
+<%= form_for UserFile.new, :remote => true, :html => { :multipart => true }  do |form| %>
 <div class="field">
 
 <table class="tbl_field">
@@ -17,7 +17,9 @@
   <tr>
     <td>Description</td><td><%= form.text_field :description %></td>
   </tr>
-
+  <tr>
+    <td>Publish</td><td><%= form.check_box :published %></td>
+  </tr>
 </table>
 
 </div>

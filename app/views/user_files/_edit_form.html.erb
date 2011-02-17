@@ -1,0 +1,84 @@
+<% if user_file.published? %>
+
+
+  <table class="tbl_field">
+     <tr>
+      <td>File</td>
+      <td><%= link_to image_tag('/images/btn_download.png'),:controller=>'user_files',:action=>'download',:id=>user_file.id %>
+        </td>
+
+      </td>
+    </tr>
+    <tr>
+      <td>Title</td><td> <div class="div_textbox"><%=  user_file.title %></div></td>
+    </tr>
+    <tr>
+      <td>Description</td><td><div class="div_textbox"><%= user_file.description %></div></td>
+    </tr>
+    <tr>
+      <td>Publish</td><td><div class="div_textbox">Published (cannot be edited)</div></td>
+    </tr>
+
+        <tr>
+      <td>Version Number</td><td><div class="div_textbox"><%= user_file.version_number %></div></td>
+    </tr>
+
+  </table>
+
+
+
+
+
+
+<% else %>
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  // <![CDATA[
+  $(document).ready(function() {
+    $("#new_file").click(function(){
+      $("#obj_file").html("<input id=\"user_file_attachment\" name=\"user_file[attachment]\" type=\"file\" />")
+    });
+
+  });
+
+
+  // ]]>
+  </script>
+  <% form_for  user_file, :remote=> true do |form| %>
+  <div class="field">
+  <table class="tbl_field">
+     <tr>
+      <td>File</td>
+      <td>
+        <div id="obj_file">
+          <%= link_to image_tag('/images/btn_download.png'),:controller=>'user_files',:action=>'download',:id=>user_file.id %> <%= link_to image_tag('/images/btn_change_file.png'),"#",:id=>"new_file" %>
+        </div>
+        </td>
+
+      </td>
+    </tr>
+    <tr>
+      <td>Title</td><td><%= form.text_field :title %></td>
+    </tr>
+    <tr>
+      <td>Description</td><td><%= form.text_field :description %></td>
+    </tr>
+    <tr>
+      <td>Publish</td><td><%= form.check_box :published %></td>
+    </tr>
+    <tr>
+      <td>Version Number</td><td><%= form.text_field :version_number %></td>
+    </tr>
+
+
+  </table>
+
+
+  </div>
+  <div class="actions"  >
+  <%= form.submit 'Update' %>
+  </div>
+
+  <% end %>
+
+<% end %>
+

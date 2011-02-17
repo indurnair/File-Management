@@ -1,17 +1,28 @@
 <% unless @user_files.blank? %>
 <h1>List of Files</h1>
-<table cellpadding="0" cellspacing="0" width="80%">
-<tr class="table_heading"><td>Title</td><td>Description</td><td>Created Date</td><td></td><td></td><td></td><td></td></tr>
+<table id="tbl_list"cellpadding="0" cellspacing="0" width="80%">
+<tr>
+  <th>Title</th>
+  <th>Description</th>
+  <th>Created Date</th>
+  <th></th>
+  <th></th>
+  <th></th>
+  <th></th>
+</tr>
 
 <% for attachment in @user_files %>
 <tr class="<%= cycle('even', 'odd')%>">
-<td style="text-align:left;"><%= attachment.title[0..25] %></td>
-<td><%= attachment.description[0..25] %></td>
-<td><%= attachment.created_at.strftime("%m/%d/%y") %></td>
-<td title = "Show"><%= link_to image_tag('/images/open.png'),user_file_path(attachment) %></td>
-<td title = "Download"><%= link_to image_tag('/images/download.png'),:controller=>'user_files',:action=>'download',:id=>attachment.id %></td>
-<td title = "Create new version"><%= link_to image_tag('/images/new.png'), "#" %></td>
-<td title = <%= "(" + attachment.user.login + ")" + attachment.user.first_name + " " + attachment.user.last_name  %>><%= link_to attachment.user.login, "#" %></td>
+  <td style="text-align:left;"><%= attachment.title[0..25] %></td>
+  <td><%= attachment.description[0..25] %></td>
+  <td><%= attachment.created_at.strftime("%m/%d/%y") %></td>
+  <td align="center" title = "<%= attachment.published ? 'Show(Published)' : 'Edit' %>"><%= link_to image_tag('/images/open.png'),edit_user_file_path(attachment) %></td>
+  <td align="center" title = "Download"><%= link_to image_tag('/images/download.png'),:controller=>'user_files',:action=>'download',:id=>attachment.id %></td>
+  <td align="center" title = "Create new version">
+  <%= attachment.published ? (link_to image_tag('/images/new.png') ,:controller=>'user_files',:action=>'new_version',:id=>attachment.id) : "-" %>
+  </td>
+
+  <td title = <%= "(" + attachment.user.login + ")" + attachment.user.first_name + " " + attachment.user.last_name  %>><%= link_to attachment.user.login, "#" %></td>
 </tr>
 <% end %>
 </table>

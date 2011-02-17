@@ -1,2 +1,6 @@
-<%= user_file.title%> :: <%= link_to 'Download',:controller=>'user_files',:action=>'download',:id=>user_file.id %>
+<table class="tbl_userfile">
+  <tr>
+    <td><%= user_file.title%></td> <td><%= user_file.published ? "Published" : "Not yet published" %></td> <td><%= link_to 'Download',:controller=>'user_files',:action=>'download',:id=>user_file.id %></td>
+  </tr>
+</table>
 

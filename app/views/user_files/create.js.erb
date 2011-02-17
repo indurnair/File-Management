@@ -1,5 +1,9 @@
 <%= remotipart_response do %>
-$("#flash_notice").html('User File details updated');
-$("#userfile_added").append("<%= escape_javascript(render(@user_file))%>");
+$("#flash_notice").html("<%= escape_javascript(flash.now[:notice]) %>");
+<% if @user_file.nil? %>
+  $("#userfile_forms").append("<%= escape_javascript(render :partial=>'form') %>");
+<% else %>
+  $("#userfile_added").append("<%= escape_javascript(render(@user_file))%>");
+<% end %>
 <% end %>
 

@@ -1,11 +1,4 @@
 
-<style type="text/css">
-#pbar{
-  width:206px;
-  height:11px;
-  background-image: url('/images/pbar.gif');
-}
-</style>
 
 <script type="text/javascript" language="javascript" charset="utf-8">
 // <![CDATA[
@@ -42,10 +35,10 @@ $(document).ready(function() {
 
 
 
-<h1>New File Upload</h1>
+<h1>File Upload</h1>
 <div id="flash_notice"></div>
 <div id="userfile_added"></div>
-<%= link_to 'Add Another',"#", :id=>"add_form"  %>
+<%= link_to image_tag('/images/btn_add_another.png'),"#", :id=>"add_form"  %>
 <div id="userfile_forms">
 <%= render :partial =>'form' %>
 </div>

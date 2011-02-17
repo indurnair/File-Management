@@ -10,7 +10,7 @@ class CreateUserFiles < ActiveRecord::Migration
       t.boolean :published,:default =>false
       t.string :title
       t.text :description
-      t.integer :version_number
+      t.string :version_number
       t.timestamps
     end
   end

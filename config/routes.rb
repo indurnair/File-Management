@@ -17,6 +17,7 @@ FileManagement::Application.routes.draw do
       get :published_files
       get :download
       post :publish_file
+      get :new_version
      end
   end
   resources :users

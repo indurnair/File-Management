@@ -8,7 +8,7 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
-
+<div id="loggedin_notification"><% if current_user %>Logged in as <%= current_user.login %> <% end %></div>
 <div id="menu" style="width:80%" align="center">
 <% if current_user and current_user.role? :user %>
 <%= link_to 'Logout',destroy_user_session_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
@@ -31,7 +31,7 @@
 <% end %>
 </div>
 <div  id="content" style="width:80%" align="center">
-<div style="float:right"><% if current_user %>Logged in as <%= current_user.login %> <% end %></div>
+
 
 <% flash.each do |key,value| %>
              <div  id="flash" class="flash_<%= key %>" >

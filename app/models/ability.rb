@@ -9,7 +9,7 @@ class Ability
      end
       if user.role? :user
        can :create, UserFile
-      can [:edit,:update,:published_files,:current_user_files,:download,:publish_file], UserFile
+      can [:edit,:update,:published_files,:current_user_files,:download,:publish_file,:new_version], UserFile
 
       can :read, User
       can :show, UserFile

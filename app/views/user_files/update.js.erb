@@ -1,5 +1,5 @@
 <%= remotipart_response do %>
-$("#flash_notice").html('User File details updated');
-$('.actions').toggle();
+$("#flash_notice").html("<%= escape_javascript(flash.now[:notice]) %>");
+$("#edit_form").html("<%= escape_javascript(render :partial => "edit_form" ,:locals =>{:user_file => @user_file} )%>");
 <% end %>
 
