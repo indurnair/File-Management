@@ -6,6 +6,9 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :first_name,:last_name,:active,:login,:email, :password, :password_confirmation,:state_id,:country_id,:address,:zip,:roles_mask,:roles
+
+  validates_presence_of :first_name, :login, :email
+
   has_many :user_files
   belongs_to :state
   belongs_to :country
