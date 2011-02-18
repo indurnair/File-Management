@@ -12,7 +12,9 @@
 <div id="menu" style="width:80%" align="center">
 <% if current_user and current_user.role? :user %>
 <%= link_to 'Logout',destroy_user_session_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
+<% if current_user.active %>
 <%= link_to 'Edit Profile',edit_registration_path(current_user) %>&nbsp;&nbsp;|&nbsp;&nbsp;
+<% end %>
 <%= link_to 'Upload',new_user_file_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
 <%= link_to 'Your Files',:controller=>'/user_files',:action=>'current_user_files' %>&nbsp;&nbsp;|&nbsp;&nbsp;
 <%= link_to 'Published Files',:controller=>'/user_files',:action=>'published_files' %>
@@ -22,7 +24,8 @@
 <%= link_to 'Upload',new_user_file_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
 <%= link_to 'All Files',user_files_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
 <%= link_to 'Your Files',:controller=>'/user_files',:action=>'current_user_files' %>&nbsp;&nbsp;|&nbsp;&nbsp;
-<%= link_to 'Published Files',:controller=>'/user_files',:action=>'published_files' %>
+<%= link_to 'Published Files',:controller=>'/user_files',:action=>'published_files' %>|
+<%= link_to 'All Users',users_path %>
 <% else %>
 <%= link_to 'Login',new_user_session_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
 

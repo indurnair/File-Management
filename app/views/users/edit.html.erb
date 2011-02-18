@@ -17,7 +17,7 @@
  %></td></tr>
  <tr><td><%= f.label 'Country' %>:</td><td><%= f.select :country_id,Country.find(:all).map {|country| [country.name,country.id]}, {:include_blank => 'Select ...'}
  %></td></tr>
- <tr><td>Activate/Ban? </td><td><%= check_box :user, :active %></td></tr>
+ <tr><td>Activate? </td><td><%= check_box :user, :active %></td></tr>
  <tr><td><%= f.label :roles %></td>
  <td>   <% for role in User::ROLES %>
       <%= check_box_tag "user[roles][]", role, @user.roles.include?(role) %>

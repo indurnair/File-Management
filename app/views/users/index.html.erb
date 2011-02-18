@@ -1,7 +1,7 @@
 <h1>User List</h1>
-<table cellpadding="0" cellspacing="0" width="80%">
+<table id="tbl_list"cellpadding="0" cellspacing="0" width="80%">
+<tr><th>First Name</th><th>Last Name</th><th>Login</th><th>Email</th><th></th><th></th></tr>
 <% for user in @users %>
-<tr class="table_heading"><td>First Name</td><td>Last Name</td><td>Login</td><td>Email</td><td></td><td></td></tr>
 <tr class="<%= cycle('even', 'odd')%>">
   <td><%= user.first_name %></td>
   <td><%= user.last_name %></td>

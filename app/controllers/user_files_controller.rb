@@ -1,5 +1,6 @@
 class UserFilesController < ApplicationController
   load_and_authorize_resource
+  before_filter :check_banned_user
   def new
     #@user_file = UserFile.new
 

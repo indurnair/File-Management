@@ -1,0 +1,2 @@
+ ROLES = %w[admin user]
+
