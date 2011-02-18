@@ -18,7 +18,7 @@
   <td><%= attachment.created_at.strftime("%m/%d/%y") %></td>
   <td align="center" title = "<%= attachment.published ? 'Show(Published)' : 'Edit' %>"><%= link_to image_tag('/images/open.png'),edit_user_file_path(attachment) %></td>
   <td align="center" title = "Download"><%= link_to image_tag('/images/download.png'),:controller=>'user_files',:action=>'download',:id=>attachment.id %></td>
-  <td align="center" title = "Create new version">
+  <td align="center" title = "<%= attachment.published ? "Create new version" : 'After this file is published, you can create new version of this file'%>">
   <%= attachment.published ? (link_to image_tag('/images/new.png') ,:controller=>'user_files',:action=>'new_version',:id=>attachment.id) : "-" %>
   </td>
 

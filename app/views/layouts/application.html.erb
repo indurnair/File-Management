@@ -8,21 +8,24 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
-<div id="loggedin_notification"><% if current_user %>Logged in as <%= current_user.login %> <% end %></div>
+<div id="loggedin_notification"><% if current_user %>Logged in as <%= current_user.login %><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<%= link_to 'Logout',destroy_user_session_path %><% else %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<%= link_to 'Login',new_user_session_path %> <% end %></div>
 <div id="menu" style="width:80%" align="center">
 <% if current_user and current_user.role? :user %>
-<%= link_to 'Logout',destroy_user_session_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
-<%= link_to 'Edit Profile',edit_registration_path(current_user) %>&nbsp;&nbsp;|&nbsp;&nbsp;
-<%= link_to 'Upload',new_user_file_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
-<%= link_to 'Your Files',:controller=>'/user_files',:action=>'current_user_files' %>&nbsp;&nbsp;|&nbsp;&nbsp;
+<%= link_to 'Logout',destroy_user_session_path %> &nbsp;&nbsp;|&nbsp;&nbsp;
+<%= link_to 'Edit Profile',edit_registration_path(current_user) %> &nbsp;&nbsp;|&nbsp;&nbsp;
+<%= link_to 'Upload',new_user_file_path %> &nbsp;&nbsp;|&nbsp;&nbsp;
+<%= link_to 'Your Files',:controller=>'/user_files',:action=>'current_user_files' %> &nbsp;&nbsp;|&nbsp;&nbsp;
 <%= link_to 'Published Files',:controller=>'/user_files',:action=>'published_files' %>
 <% elsif current_user and current_user.role? :admin %>
 <%= link_to 'Logout',destroy_user_session_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
-<%= link_to 'Edit Profile',edit_registration_path(current_user) %>|
+<%= link_to 'Edit Profile',edit_registration_path(current_user) %>&nbsp;&nbsp;|&nbsp;&nbsp;
 <%= link_to 'Upload',new_user_file_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
 <%= link_to 'All Files',user_files_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
 <%= link_to 'Your Files',:controller=>'/user_files',:action=>'current_user_files' %>&nbsp;&nbsp;|&nbsp;&nbsp;
-<%= link_to 'Published Files',:controller=>'/user_files',:action=>'published_files' %>
+<%= link_to 'Published Files',:controller=>'/user_files',:action=>'published_files' %>&nbsp;&nbsp;|&nbsp;&nbsp;
+<%= link_to 'Users', users_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
+<%= link_to 'Countries', users_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
+<%= link_to 'States', users_path %>
 <% else %>
 <%= link_to 'Login',new_user_session_path %>&nbsp;&nbsp;|&nbsp;&nbsp;
 
