@@ -1,6 +1,7 @@
 
 <%#= 'Uploaded File: '%><%#= @user_file.attachment.url %>
 <table>
+<tr><td>Name : <%= @user_file.attachment_file_name %></td></tr>
 <tr><td>Title : <%= @user_file.title %></td></tr>
 <tr><td>Description : <%= @user_file.description %></td></tr>
 <tr><td><% if @user_file.published? %> Published <% else %> Unpublished <% end %></td></tr>

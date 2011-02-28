@@ -10,6 +10,9 @@
       </td>
     </tr>
     <tr>
+      <td>Name</td><td> <div class="div_textbox"><%=  user_file.attachment_file_name %></div></td>
+    </tr>
+    <tr>
       <td>Title</td><td> <div class="div_textbox"><%=  user_file.title %></div></td>
     </tr>
     <tr>
@@ -19,10 +22,13 @@
       <td>Publish</td><td><div class="div_textbox">Published (cannot be edited)</div></td>
     </tr>
 
-        <tr>
+    <tr>
       <td>Version Number</td><td><div class="div_textbox"><%= user_file.version_number %></div></td>
     </tr>
 
+    <tr>
+      <td>Ansestors</td><td><div class="div_textbox"><%= user_file.ancestors %></div></td>
+    </tr>
   </table>
 
 
@@ -60,7 +66,7 @@
       <td>Title</td><td><%= form.text_field :title %></td>
     </tr>
     <tr>
-      <td>Description</td><td><%= form.text_field :description %></td>
+      <td>Description</td><td><%= form.text_area :description ,:size=>'35x10'%></td>
     </tr>
     <tr>
       <td>Publish</td><td><%= form.check_box :published %></td>

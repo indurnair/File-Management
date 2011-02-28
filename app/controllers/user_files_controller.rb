@@ -1,5 +1,22 @@
 class UserFilesController < ApplicationController
+
+rescue_from ActionController::MissingFile, :with => :show_error
+rescue_from OpenURI::HTTPError, :with => :show_error
+rescue_from AWS::S3::NoSuchKey, :with => :show_error
+
+
+
+
+
   load_and_authorize_resource
+  before_filter :check_banned_user
+
+  def show_error
+    flash[:error] = "Sorry, Unable to fetch the file"
+    redirect_to "/"
+  end
+
+
   def new
     #@user_file = UserFile.new
 
@@ -63,27 +80,39 @@ class UserFilesController < ApplicationController
   end
 
 
-  def download
+def download
     @user_file = UserFile.find(params[:id])
-    send_file Rails.root.to_s + '/public'.to_s + @user_file.attachment.url.to_s
+
+
+  if @user_file.attachment.url[0..22] != "http://s3.amazonaws.com"
+    send_file Rails.root.to_s + '/public'.to_s + @user_file.attachment.url.to_s rescue  send_file @user_file.attachment.url.to_s
+  else
+    data = open(@user_file.attachment.url)
+    send_data data.read, :type => data.content_type, :disposition => 'attachment', :filename => @user_file.attachment_file_name
   end
 
-  def publish_file
-    @user_file = UserFile.find(params[:file_id])
-    @user_file.update_attribute(:published,true)
-    redirect_to user_file_path(@user_file.id)
-  end
 
-  def new_version
+end
+
+def publish_file
+  @user_file = UserFile.find(params[:file_id])
+  @user_file.update_attribute(:published,true)
+  redirect_to user_file_path(@user_file.id)
+end
+
+def new_version
   @old_user_file = UserFile.find(params[:id])
-  @user_file = UserFile.new(@old_user_file.attributes.merge(:user_id => current_user.id,:published => false, :parent_id=>@old_user_file.id, :ancestors => @old_user_file.ancestors ? "#{@old_user_file.ancestors},#{@old_user_file.id.to_s}" : "#{@old_user_file.id.to_s}", :version_number => @old_user_file.version_number ? "#{@old_user_file.version_number}.1" : "1"))
+  @user_file = UserFile.new(@old_user_file.attributes.merge(:user_id => current_user.id,:published => false, :parent_id=>@old_user_file.id, :ancestors => @old_user_file.ancestors ? "#{@old_user_file.ancestors},#{@old_user_file.id.to_s}" : "#{@old_user_file.id.to_s}", :version_number => @old_user_file.version_number ? "#{@old_user_file.version_number}.1" : "1", :attachment_file_name => "#{@old_user_file.attachment_file_name}.1"))
     @user_file.attachment = @old_user_file.attachment
+
+
     if @user_file.save
       flash[:notice] = 'Successfully created new version.'
       redirect_to edit_user_file_path(@user_file)
     end
 
-  end
+
+end
 
 
 end

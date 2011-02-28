@@ -4,7 +4,7 @@ gem 'rails', '3.0.3'
 gem 'devise'
 gem 'jquery-rails'
 gem 'remotipart', :git => 'git://github.com/JangoSteve/remotipart.git', :branch => 'latest-and-greatest'
-
+gem 'aws-s3'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
